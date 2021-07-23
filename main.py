@@ -1,8 +1,9 @@
 from spreadsheet import SpreadSheet
 from query import Query
 import streamlit as st
-import numpy as np
+#import st_state_patch
 
+import numpy as np
 from PIL import Image
 from pathlib import Path
 
@@ -40,15 +41,14 @@ with body:
     url = st.text_input('Inserte URL del diccionario:', url)
 
     try:
-        s = SpreadSheet(SCOPES, st.secrets["gcp_service_account"], url)
+        spreadsheet = SpreadSheet(SCOPES, st.secrets["gcp_service_account"], url)
+        df = spreadsheet.dict_to_df()
+        cols = list(df.columns.values)
     except:
         st.error('Ingrese una URL válida.')
 
-    df = s.dict_to_df()
-    cols = list(df.columns.values)
-
-    st.write('## Seleccionar columnas')
     #SELECT DATA
+    st.write('## Seleccionar columnas')
     usr_cols = st.multiselect('Columnas' ,cols, default=cols, key='General')
 
     st.write(df[usr_cols])
@@ -66,6 +66,7 @@ with body:
         if len(g) != 0:
             query.combine_columns(g)
 
+
     # PRINT LOGICAL EXPRESION
     st.write('## Estructura lógica ')
     st.write(query.get_logic_expression())
@@ -78,4 +79,4 @@ with body:
         st.write(query_text)
 
         if st.button('Agregar al documento de Drive'):
-            s.append_query_to_spreadsheet(query_text)
+            spreadsheet.append_query_to_spreadsheet(query_text)
