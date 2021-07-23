@@ -35,7 +35,7 @@ with body:
     # GET DATA
     st.write('## Cargar el diccionario')
 
-    url = 'https://docs.google.com/spreadsheets/d/1iilHcaQqvJj6ShrnIbRFlKeqjaCnoNxoza11WGuYwps/edit#gid=0'
+    url = 'https://docs.google.com/spreadsheets/d/1UcGt8Cyr93fVJOMFGe2WWjyoNlanbm9SLUghxK8yBjE/edit#gid=0'
     url = st.text_input('Ingrese URL del diccionario:', url)
 
     try:
