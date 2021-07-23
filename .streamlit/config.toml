@@ -1,0 +1,6 @@
+# .streamlit/config.toml
+
+[theme]
+base="light"
+primaryColor="#3db893" #verde linterna
+textColor="#001a14" #negro linterna
