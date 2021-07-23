@@ -14,7 +14,6 @@ IMAGES_DIR = BASE_DIR / 'images'
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets',
          'https://www.googleapis.com/auth/drive',
          'https://www.googleapis.com/auth/drive.file']
-SERVICE_ACCOUNT_FILE = 'keys.json'
 
 linterna_logo =  Image.open(IMAGES_DIR/'linterna_logo.jpg')
 
@@ -41,7 +40,7 @@ with body:
     url = st.text_input('Inserte URL del diccionario:', url)
 
     try:
-        s = SpreadSheet(SCOPES, SERVICE_ACCOUNT_FILE, url)
+        s = SpreadSheet(SCOPES, st.secrets["gcp_service_account"], url)
     except:
         st.error('Ingrese una URL válida.')
 

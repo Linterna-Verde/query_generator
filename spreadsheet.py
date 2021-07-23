@@ -5,8 +5,8 @@ from client import Client
 
 
 class SpreadSheet(Client):
-    def __init__(self, sp, sap, url):
-        super().__init__(sp, sap)
+    def __init__(self, sp, sai, url):
+        super().__init__(sp, sai)
         self.spreadsheet = self.client.open_by_url(url)
 
     def dict_to_df(self, name='Diccionario'):
