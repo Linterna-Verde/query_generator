@@ -76,7 +76,6 @@ with body:
                 if len(g) != 0:
                     query.combine_columns(g)
 
-
             # PRINT LOGICAL EXPRESION
             st.write('## Estructura lógica ')
             st.write(query.get_logic_expression())
@@ -89,7 +88,10 @@ with body:
                 #PRINT & APPEND QUERY
                 st.write('## Query ' + ':snake:')
 
-                query_text = query.get_query()
+                #incluir o no el filtro de twitter
+                twitter_filter = st.checkbox('Twitter only', value=False)
+
+                query_text = query.get_query(twitter_filter)
                 st.write(query_text)
 
                 st.write('## Agregar al documento de Drive')

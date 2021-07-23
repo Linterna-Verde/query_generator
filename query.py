@@ -72,7 +72,7 @@ class Query:
 
     # Join column with AND in a query.
     #In case NOT colum exist it goes last and is joined with NOT.
-    def get_query(self):
+    def get_query(self, twitter_filter=True):
         query_list = self.join_col_vals_OR()
 
         if self.not_col:
@@ -81,8 +81,12 @@ class Query:
         else:
             query = '(' + ' AND '.join(query_list[:]) + ')'
 
-        query = query + ' AND metaData.source.socialOriginType:“twitter”' #Filter for twitter only
+        if twitter_filter:
+            query = query + ' AND metaData.source.socialOriginType:“twitter”' #Filter for twitter only
 
+        else:
+            query = query[1:-1]
+            
         return query
 
     #Print the logic expression of the query
