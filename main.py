@@ -53,33 +53,32 @@ with body:
 
     st.write(df[usr_cols])
 
-    if st.button('Confrimar'):
-        df = df[usr_cols]
+    #GROUP BY COLUMN
+    st.write('## Agrupar columnas')
+    col1, col2 = st.beta_columns(2)
+    group1 = col1.multiselect('Grupo 1', usr_cols, default=None, key='group1')
+    group2 = col2.multiselect('Grupo 2', list(set(usr_cols).difference(group1)), default=None, key='group2')
 
-        #GROUP BY COLUMN
-        st.write('## Agrupar columnas')
-        col1, col2 = st.beta_columns(2)
-        group1 = col1.multiselect('Grupo 1', usr_cols, default=None, key='group1')
-        group2 = col2.multiselect('Grupo 2', list(set(usr_cols).difference(group1)), default=None, key='group2')
+    query = Query(df[usr_cols])
+    query.preprocess_dictionary()
 
-        query = Query(df)
-        query.preprocess_dictionary()
-
-        for g in [group1,group2]:
-            if len(g) != 0:
-                query.combine_columns(g)
+    for g in [group1,group2]:
+        if len(g) != 0:
+            query.combine_columns(g)
 
 
-        # PRINT LOGICAL EXPRESION
-        st.write('## Estructura lógica ')
-        st.write(query.get_logic_expression())
+    # PRINT LOGICAL EXPRESION
+    st.write('## Estructura lógica ')
+    st.write(query.get_logic_expression())
 
-        if st.button('Generar query'):
-            #PRINT & APPEND QUERY
-            st.write('## Query ' + ':snake:')
 
-            query_text = query.get_query()
-            st.write(query_text)
+    if st.checkbox('Generar query', value=False):
+        #PRINT & APPEND QUERY
+        st.write('## Query ' + ':snake:')
 
-            if st.button('Agregar al documento de Drive'):
-                spreadsheet.append_query_to_spreadsheet(query_text)
+        query_text = query.get_query()
+        st.write(query_text)
+
+        if st.button('Agregar al documento de Drive'):
+            spreadsheet.append_query_to_spreadsheet(query_text)
+            st.write('## ¡Listo! :crocodile:')
