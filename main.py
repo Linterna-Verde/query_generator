@@ -89,7 +89,7 @@ with body:
                 st.write('## Query ' + ':snake:')
 
                 #incluir o no el filtro de twitter
-                twitter_filter = st.checkbox('Twitter only', value=False)
+                twitter_filter = st.checkbox('Twitter only', value=True)
 
                 query_text = query.get_query(twitter_filter)
                 st.write(query_text)
