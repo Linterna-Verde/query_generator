@@ -36,20 +36,22 @@ with body:
     st.write('## Cargar el diccionario')
 
     url = 'https://docs.google.com/spreadsheets/d/1UcGt8Cyr93fVJOMFGe2WWjyoNlanbm9SLUghxK8yBjE/edit#gid=0'
-    url = st.text_input('Ingrese URL del diccionario:', url)
-
-    try:
-        spreadsheet = SpreadSheet(SCOPES, st.secrets["gcp_service_account"], url)
-        df = spreadsheet.dict_to_df()
-        cols = list(df.columns.values)
-    except:
-        st.error('Ingrese una URL válida.')
+    url = st.text_input('Ingrese URL del diccionario:')
+    sheet_name = st.text_input('Ingrese el nombre de la hoja:', 'Diccionario')
 
     if 'pressed_1st_button' not in st.session_state:
         st.session_state.pressed_1st_button = False
 
     if st.button("Confrimar", key= 'confirmar1')  or st.session_state.pressed_1st_button:
         st.session_state.pressed_1st_button = True #guardar sesion
+
+        #LOAD DATA
+        try:
+            spreadsheet = SpreadSheet(SCOPES, st.secrets["gcp_service_account"], url)
+            df = spreadsheet.dict_to_df(name= sheet_name)
+            cols = list(df.columns.values)
+        except:
+            st.error('Ingrese una URL válida.')
 
         #SELECT DATA
         st.write('## Seleccionar columnas')
