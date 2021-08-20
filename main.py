@@ -37,7 +37,7 @@ with body:
 
     url = 'https://docs.google.com/spreadsheets/d/1UcGt8Cyr93fVJOMFGe2WWjyoNlanbm9SLUghxK8yBjE/edit#gid=0'
     url = st.text_input('Ingrese URL del diccionario:')
-    sheet_name = st.text_input('Ingrese el nombre de la hoja:', 'Diccionario')
+    sheet_name = st.text_input('Ingrese el nombre de la hoja que contiene el diccionario:', 'Diccionario')
 
     if 'pressed_1st_button' not in st.session_state:
         st.session_state.pressed_1st_button = False
