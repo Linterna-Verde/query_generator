@@ -19,14 +19,14 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets',
 linterna_logo =  Image.open(IMAGES_DIR/'linterna_logo.jpg')
 
 #sections
-header = st.beta_container()
-body = st.beta_container()
+header = st.container()
+body = st.container()
 
 with header:
 
     st.image(linterna_logo)
     st.write('\n'*2)
-    col1, col2, col3 = st.beta_columns([0.5,3,0.5])
+    col1, col2, col3 = st.columns([0.5,3,0.5])
     col2.title('GENERADOR DE QUERIES')
     st.write('\n'*2)
     st.write('**NOTA:** para que funcione la aplicación debe compartirse el documento de Drive en donde está el diccionario con el siguiente correo: <ins>scrapper@prueba-scapper.iam.gserviceaccount.com </ins>',unsafe_allow_html=True)
@@ -42,7 +42,7 @@ with body:
     if 'pressed_1st_button' not in st.session_state:
         st.session_state.pressed_1st_button = False
 
-    if st.button("Confrimar", key= 'confirmar1')  or st.session_state.pressed_1st_button:
+    if st.button("Confirmar", key= 'confirmar1')  or st.session_state.pressed_1st_button:
         st.session_state.pressed_1st_button = True #guardar sesion
 
         #LOAD DATA
@@ -62,12 +62,12 @@ with body:
         if 'pressed_2nd_button' not in st.session_state:
             st.session_state.pressed_2nd_button = False
 
-        if st.button("Confrimar", key= 'confirmar2')  or st.session_state.pressed_2nd_button:
+        if st.button("Confirmar", key= 'confirmar2')  or st.session_state.pressed_2nd_button:
             st.session_state.pressed_2nd_button = True #guardar sesion
 
             #GROUP BY COLUMN
             st.write('## Agrupar columnas')
-            col1, col2 = st.beta_columns(2)
+            col1, col2 = st.columns(2)
             group1 = col1.multiselect('Grupo 1', usr_cols, default=None, key='group1')
             group2 = col2.multiselect('Grupo 2', list(set(usr_cols).difference(group1)), default=None, key='group2')
 
@@ -94,7 +94,10 @@ with body:
                 twitter_filter = st.checkbox('Twitter only', value=True)
 
                 query_text = query.get_query(twitter_filter)
+                query_text = query_text.replace("*", "\*")
+
                 st.write(query_text)
+                print(query_text)
 
                 st.write('## Agregar al documento de Drive')
 
