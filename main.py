@@ -94,10 +94,9 @@ with body:
                 twitter_filter = st.checkbox('Twitter only', value=True)
 
                 query_text = query.get_query(twitter_filter)
-                query_text = query_text.replace("*", "\*")
+                query_text2 = query_text.replace("*", "\*") #cambio para que imprima bien los asteríscos
 
-                st.write(query_text)
-                print(query_text)
+                st.write(query_text2)
 
                 st.write('## Agregar al documento de Drive')
 
